@@ -18,6 +18,7 @@
     "jest": true
   },
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "eqeqeq": ["error", "smart"]
   }
 }
