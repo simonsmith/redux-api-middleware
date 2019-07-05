@@ -105,22 +105,6 @@ test('allows custom actions', async () => {
   ]);
 });
 
-test('checks for response.json() when request object is `fetch`', async () => {
-  const mockFetch = jest
-    .fn()
-    .mockResolvedValue({json: jest.fn().mockResolvedValue('some json')});
-  const store = createStore(mockFetch);
-  const onSuccess = jest.fn().mockReturnValue({type: 'SUCCESS'});
-  await store.dispatch(
-    apiRequest('/url', {
-      option: 'value',
-      onSuccess,
-    })
-  );
-  expect(onSuccess).toHaveBeenCalledWith('some json');
-  expect(store.getActions()).toEqual([{type: 'SUCCESS'}]);
-});
-
 test('apiRequest checks first argument should be string', () => {
   expect(() => {
     apiRequest({});

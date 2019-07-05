@@ -51,12 +51,6 @@ export function createApiMiddleware(request, options = {}) {
       );
 
       return request(url, requestOptions)
-        .then(res => {
-          if (isFunction(res.json)) {
-            return res.json();
-          }
-          return res;
-        })
         .then(
           res => {
             if (isFunction(onSuccess)) {
