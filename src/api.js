@@ -51,26 +51,24 @@ export function createApiMiddleware(request, options = {}) {
       );
 
       return request(url, requestOptions)
-        .then(
-          res => {
-            if (isFunction(onSuccess)) {
-              dispatch(onSuccess(res));
-            }
-            return res;
-          },
-          error => {
-            if (type) {
-              dispatch({
-                type: opts.actionTypes.failure,
-                payload: error,
-                error: true,
-              });
-            }
-            if (isFunction(onFailure)) {
-              dispatch(onFailure(error));
-            }
+        .then(res => {
+          if (isFunction(onSuccess)) {
+            dispatch(onSuccess(res));
           }
-        )
+          return res;
+        })
+        .catch(error => {
+          if (type) {
+            dispatch({
+              type: opts.actionTypes.failure,
+              payload: error,
+              error: true,
+            });
+          }
+          if (isFunction(onFailure)) {
+            dispatch(onFailure(error));
+          }
+        })
         .finally(() => {
           if (type) {
             dispatch({type: opts.actionTypes.end, payload: type});
