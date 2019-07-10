@@ -1,0 +1,4 @@
+src
+.prettierrc
+*.config.js
+.eslintrc
