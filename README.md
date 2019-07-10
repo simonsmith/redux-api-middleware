@@ -3,6 +3,8 @@
 A tiny [Redux](https://redux.js.org/) middleware for simplifying the
 communication with API endpoints.
 
+[![Build Status](https://travis-ci.org/simonsmith/redux-api-middleware.svg?branch=master)](https://travis-ci.org/simonsmith/redux-api-middleware)
+
 ## Why
 
 When writing async action creators that interact with API endpoints (for
