@@ -1,4 +1,5 @@
 import {createApiMiddleware, apiRequest} from './api';
+import {isFSA, isError} from 'flux-standard-action';
 import configureMockStore from 'redux-mock-store';
 
 const createStore = (request, opts) => {
@@ -103,6 +104,20 @@ test('allows custom actions', async () => {
     {type: 'FAIL', payload: 'some response', error: true},
     {type: 'END', payload: 'SOME_ACTION'},
   ]);
+});
+
+test('dispatches valid FSA', async () => {
+  const requestFn = jest.fn().mockRejectedValue('some response');
+  const store = createStore(requestFn);
+  await store.dispatch(
+    apiRequest('/url', {
+      type: 'SOME_ACTION',
+    })
+  );
+  const [start, error, end] = store.getActions();
+  expect(isFSA(start)).toBe(true);
+  expect(isFSA(end)).toBe(true);
+  expect(isError(error)).toBe(true);
 });
 
 test('apiRequest checks first argument should be string', () => {
